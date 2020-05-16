@@ -1,0 +1,46 @@
+Port Game Online Mobile
+Update 16 may 2020
+
+FF   : TCP : 6006,7006,9006,11000-11019,39003,39006,39698,39779
+       UDP : 6008,7008,9008,10000-10009,11000-11019
+
+ML   : TCP : 5000-5180,5500-5680,9443,30020-30220
+       UDP : 5000-5180,5500-5680,9992,30020-30220
+	 
+COD  : TCP : 3013,10000-10019,50000,65010,65050
+       UDP : 7085-7995,8700,9030,10010-10019
+	  
+PUBG : TCP : 14000,17000,17500,18081,20000-20002
+       UDP : 10020-14000,17000,17500,20000-20002
+	   
+COC  : TCP : 9330-9340
+CR     UDP : 9330-9340
+
+------------------------------
+RAW MikroTik
+#sesuaikan masing masing
+
+/ip firewall raw
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
+    3m chain=prerouting comment="Free Fire" dst-port=6006,7006,9006,11000-11019,39003,39006,39698,39779 protocol=tcp
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
+    3m chain=prerouting dst-port=6008,7008,9008,10000-10009,11000-11019 protocol=udp
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
+    3m chain=prerouting comment="Mobile Legends" dst-port=5000-5180,5500-5680,9443,30020-30220 protocol=tcp
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
+    3m chain=prerouting dst-port=5000-5180,5500-5680,9992,30020-30220 protocol=udp
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
+    3m chain=prerouting comment="Call Of Duty Mobile" dst-port=3013,10000-10019,50000,65010,65050 protocol=tcp
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
+    3m chain=prerouting dst-port=7085-7995,8700,9030,10010-10019 protocol=udp
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
+    3m chain=prerouting comment="PUBG Mobile" dst-port=14000,17000,17500,18081,20000-20002 protocol=tcp
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
+    3m chain=prerouting dst-port=10020-14000,17000,17500,20000-20002 protocol=udp
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
+    3m chain=prerouting comment="Supercell Games" dst-port=9330-9340 protocol=tcp
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
+    3m chain=prerouting dst-port=9330-9340 protocol=udp
+	
+------------------------------
+~ DKL
