@@ -1,5 +1,6 @@
 Port Game Online Mobile
-Update 16 may 2020
+Update 19 may 2020
+perubahan : menambahkan port baru tcp dan udp game FF
 
 FF   : TCP : 6006,7006,8006,9006,39003,39006,39698,39779
        UDP : 6008,7008,8008,9008,10000-10009
