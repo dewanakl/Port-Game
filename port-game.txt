@@ -21,7 +21,7 @@ CR     UDP : 9330-9340
 RAW MikroTik
 #sesuaikan masing masing
 #src address list isikan ip private
-#tambahkan juga dst address list kecualikan "!" ip private
+#tambahkan juga dst address list lalu kecualikan "!" ip private
 #address list = IP Game
 #timeout 3 menit
 
