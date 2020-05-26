@@ -1,6 +1,6 @@
 Port Game Online Mobile
-Update 19 may 2020
-perubahan : menambahkan port baru tcp dan udp game FF
+Update 26 may 2020
+Perubahan : Menyederhanakan port game COC & CR
 
 FF   : TCP : 6006,7006,8006,9006,11000-11019,39003,39006,39698,39779
        UDP : 6008,7008,8008,9008,10000-10009,11000-11019
@@ -14,8 +14,8 @@ COD  : TCP : 3013,10000-10019,50000,65010,65050
 PUBG : TCP : 14000,17000,17500,18081,20000-20002
        UDP : 10020-14000,17000,17500,20000-20002
 	   
-COC  : TCP : 9330-9340
-CR     UDP : 9330-9340
+COC  : TCP : 9339
+CR     UDP : 9339
 
 ------------------------------
 RAW MikroTik
@@ -43,9 +43,9 @@ add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
 add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
     3m chain=prerouting dst-port=10020-14000,17000,17500,20000-20002 protocol=udp
 add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
-    3m chain=prerouting comment="Supercell Games" dst-port=9330-9340 protocol=tcp
+    3m chain=prerouting comment="Supercell Games" dst-port=9339 protocol=tcp
 add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
-    3m chain=prerouting dst-port=9330-9340 protocol=udp
+    3m chain=prerouting dst-port=9339 protocol=udp
 	
 ------------------------------
 ~ DKL
