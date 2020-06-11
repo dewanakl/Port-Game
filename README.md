@@ -1,2 +1,2 @@
 # Port game online mobile
-update 26 may 2020
+update 11 juni 2020
