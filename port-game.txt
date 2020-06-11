@@ -1,5 +1,5 @@
 Port Game Online Mobile
-Update 26 may 2020
+Update 11 juni 2020
 Perubahan : Fixed port Mobile Legends
 
 FF   : TCP : 6006,7006,8006,9006,11000-11019,39003,39006,39698,39779
