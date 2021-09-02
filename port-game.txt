@@ -13,9 +13,6 @@ COD  : TCP : 3013,10000-10019,50000,65010,65050
 	  
 PUBG : TCP : 14000,17000,17500,18081,20000-20002
        UDP : 10020-14000,17000,17500,20000-20002
-	   
-COC  : TCP : 9339
-CR     UDP : 9339
 
 ------------------------------
 RAW MikroTik
@@ -42,10 +39,6 @@ add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
     3m chain=prerouting comment="PUBG Mobile" dst-port=14000,17000,17500,18081,20000-20002 protocol=tcp
 add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
     3m chain=prerouting dst-port=10020-14000,17000,17500,20000-20002 protocol=udp
-add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
-    3m chain=prerouting comment="Supercell Games" dst-port=9339 protocol=tcp
-add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=\
-    3m chain=prerouting dst-port=9339 protocol=udp
 	
 ------------------------------
 ~ DKL
