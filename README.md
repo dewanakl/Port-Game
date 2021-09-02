@@ -1,3 +1,4 @@
 # Port game online mobile
-#### update 11 juni 2020
+#### update 2 sep 2021
+#### delete coc
 #### harap gunakan dengan bijak. thanks
