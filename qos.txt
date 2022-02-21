@@ -1,0 +1,52 @@
+/ip firewall address-list
+add address=192.168.0.0/16 list="IP Private"
+add address=10.0.0.0/8 list="IP Private"
+add address=172.16.0.0/12 list="IP Private"
+
+
+/ip firewall mangle
+add action=accept chain=prerouting dst-address-list="IP Private" src-address-list="IP Private"
+add action=accept chain=forward dst-address-list="IP Private" src-address-list="IP Private"
+add action=mark-connection chain=prerouting connection-rate=384k-999M dst-address-list="IP Game" new-connection-mark=small passthrough=no src-address-list="IP Private"
+add action=mark-connection chain=prerouting dst-address-list="IP Game" new-connection-mark=game passthrough=no src-address-list="IP Private"
+add action=mark-packet chain=forward connection-mark=game new-packet-mark=game-up out-interface=ether4 passthrough=no
+add action=mark-packet chain=forward connection-mark=game in-interface=ether4 new-packet-mark=game passthrough=no
+add action=mark-connection chain=prerouting connection-rate=0-1M new-connection-mark=small passthrough=no src-address-list="IP Private"
+add action=mark-packet chain=forward connection-mark=small new-packet-mark=small-up out-interface=ether4 passthrough=no
+add action=mark-packet chain=forward connection-mark=small in-interface=ether4 new-packet-mark=small passthrough=no
+add action=mark-connection chain=prerouting new-connection-mark=all passthrough=no src-address-list="IP Private"
+add action=mark-packet chain=forward connection-mark=all new-packet-mark=all-up out-interface=ether4 passthrough=no
+add action=mark-packet chain=forward connection-mark=all in-interface=ether4 new-packet-mark=all passthrough=no
+
+
+/ip firewall raw
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=3m chain=prerouting comment="Free Fire" dst-address-list="!IP Private" dst-port=\
+    6006,7006,8006,9006,39003,39698,39800 protocol=tcp src-address-list="IP Private"
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=3m chain=prerouting dst-address-list="!IP Private" dst-port=6008,7008,8008,9008,10000-10012 \
+    protocol=udp src-address-list="IP Private"
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=3m chain=prerouting comment="Mobile Legends" dst-address-list="!IP Private" dst-port=\
+    5001-5080,5101-5180,5401-5680,30020-30220 protocol=tcp src-address-list="IP Private"
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=3m chain=prerouting dst-address-list="!IP Private" dst-port=\
+    5001-5080,5101-5180,5401-5680,30020-30220 protocol=udp src-address-list="IP Private"
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=3m chain=prerouting comment="Call Of Duty Mobile" dst-address-list="!IP Private" dst-port=\
+    10000-10019,11000-11019,12000-12019 protocol=tcp src-address-list="IP Private"
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=3m chain=prerouting dst-address-list="!IP Private" dst-port=7405-7995,10013-10019 protocol=\
+    udp src-address-list="IP Private"
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=3m chain=prerouting comment="PUBG Mobile" dst-address-list="!IP Private" dst-port=\
+    13000-13019,17000,17500,20000-20002 protocol=tcp src-address-list="IP Private"
+add action=add-dst-to-address-list address-list="IP Game" address-list-timeout=3m chain=prerouting dst-address-list="!IP Private" dst-port=\
+    10020-14000,17000,17500,20000-20002 protocol=udp src-address-list="IP Private"
+
+
+/queue tree
+add max-limit=100M name=Root parent=global queue=default
+add max-limit=4M name=IN parent=Root queue=default
+add max-limit=768k name=OUT parent=Root queue=default
+add limit-at=1M max-limit=4M name="1. Game Down" packet-mark=game parent=IN priority=1 queue=default
+add limit-at=3M max-limit=3M name="2. Others Down" parent=IN queue=default
+add limit-at=1M max-limit=3M name="2. All Down" packet-mark=all parent="2. Others Down" priority=7 queue=default
+add limit-at=256k max-limit=768k name="1. Game Up" packet-mark=game-up parent=OUT priority=2 queue=default
+add limit-at=512k max-limit=512k name="2. Others Up" parent=OUT queue=default
+add limit-at=128k max-limit=512k name="2. All Up" packet-mark=all-up parent="2. Others Up" priority=7 queue=default
+add limit-at=2M max-limit=3M name="1. Small Down" packet-mark=small parent="2. Others Down" priority=3 queue=default
+add limit-at=384k max-limit=512k name="1. Small Up" packet-mark=small-up parent="2. Others Up" priority=3 queue=default
